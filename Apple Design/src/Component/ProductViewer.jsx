@@ -1,14 +1,17 @@
 import React from "react";
+import { useMediaQuery } from "react-responsive";
 import useMacbookStore from "../store";
 import clsx from "clsx";
-import {Canvas} from "@react-three/fiber"
-import { Box, OrbitControls } from "@react-three/drei"
-import MackbookModel14 from "./models/Macbook-14";
-import StudioLights from "./models/StudioLights";
-
+import { Canvas } from "@react-three/fiber"
+import StudioLights from "./three/StudioLights";
+import ModelSwitcher from './three/ModelSwitcher'
 
 const ProductViewer = () => {
   const { color, scale, setColor, setScale } = useMacbookStore();
+
+
+  const isMobile = useMediaQuery({ query: '(max-width: 1024px)' })
+
   return (
     <section id="product-viewer">
       <h2>Take a closer look</h2>
@@ -21,7 +24,7 @@ const ProductViewer = () => {
               onClick={() => setColor("#adb5bd")}
               className={clsx(
                 "bg-neutral-300",
-                color === "#abd5bd" && "active",
+                color === "#adb5bd" && "active",
               )}
             />
             <div
@@ -34,39 +37,41 @@ const ProductViewer = () => {
           </div>
           <div className="size-control">
             {/* 1 */}
-             <div
+            <div
               onClick={() => setScale(0.06)}
               className={clsx(
                 scale === 0.06
                   ? "big-white text-black"
                   : "bg-transparent text-white",
               )}>
-                        <p>14"</p>
-         
+              <p>14"</p>
+
             </div>
             {/* 2   */}
-              <div
+            <div
               onClick={() => setScale(0.08)}
               className={clsx(
                 scale === 0.08
                   ? "big-white text-black"
                   : "bg-transparent text-white",
               )}>
-                        <p>16"</p>
-         
+              <p>16"</p>
+
             </div>
-            
+
           </div>
         </div>
       </div>
 
 
 
-      <Canvas id="canvas" camera={{position :[0,2,5],fov: 50,near:0.1,far:100}}>
+      <Canvas id="canvas" camera={{ position: [0, 2, 5], fov: 50, near: 0.1, far: 100 }}>
         <StudioLights />
+{/* 
+        <MackbookModel14 scale={0.06} position={[0, 0, 0]} /> */}
 
-        <MackbookModel14 scale={0.06} position={[0,0,0]}/>
-        <OrbitControls enableZoom={false}/>
+
+        <ModelSwitcher scale={isMobile ? scale - 0.03 : scale} isMobile={isMobile} />
       </Canvas>
     </section>
   );

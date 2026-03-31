@@ -1,12 +1,12 @@
 import React from 'react'
-import {navLink} from '../constants/index.js'
+import { navLinks } from '../constants/index.js'
 const NavBar = () => {
   return (
     <header>
         <nav>
-            <img src="/public/logo.svg" alt='Apple Logo'/>
+            <img src="/logo.svg" alt='Apple Logo'/>
             <ul>
-                {navLink.map(({label})=>(
+                {navLinks.map(({ label }) => (
                     <li key={label}>
                         <a href={label}>{label}</a>
                     </li>
@@ -14,10 +14,10 @@ const NavBar = () => {
             </ul>
             <div className="flex-center gap-3">
                 <button>
-                    <img src="/public/search.svg" alt="Search" />
+                    <img src="/search.svg" alt="Search" />
                 </button>
                 <button>
-                    <img src="/public/cart.svg" alt="Cart" />
+                    <img src="/cart.svg" alt="Cart" />
                 </button>
             </div>
         </nav>
